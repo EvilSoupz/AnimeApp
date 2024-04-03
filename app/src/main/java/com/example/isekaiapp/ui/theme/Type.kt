@@ -34,6 +34,12 @@ val Typography = Typography(
         fontWeight = FontWeight.Bold,
         fontSize = 32.sp,
         letterSpacing = 1.sp
+    ),
+    labelSmall = TextStyle(
+        fontFamily = Caveat,
+        fontWeight = FontWeight.Bold,
+        fontSize = 12.sp,
+        letterSpacing = 1.sp
     )
 
     /* Other default text styles to override
