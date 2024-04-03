@@ -1,5 +1,6 @@
 package com.example.isekaiapp.ui.animeui
 
+
 import androidx.compose.animation.animateContentSize
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.spring
@@ -9,8 +10,12 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.CornerBasedShape
+import androidx.compose.foundation.shape.CornerSize
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.ShapeDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -19,6 +24,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -41,23 +47,24 @@ fun AnimeCard(
             .padding(8.dp)
 
     ) {
-        Column(
-            modifier = Modifier
-                .padding(8.dp)
-                .animateContentSize(
-                    animationSpec = spring(
-                        dampingRatio = Spring.DampingRatioNoBouncy,
-                        stiffness = Spring.StiffnessMedium
-                    )
-                )
-        ) {
-            Text(
-                text = animeName,
-                style = MaterialTheme.typography.titleLarge,
-                textAlign = TextAlign.Center,
-                modifier = Modifier
-                    .fillMaxWidth()
-            )
+       Column {
+           Column(
+               modifier = Modifier
+                   .padding(8.dp)
+                   .animateContentSize(
+                       animationSpec = spring(
+                           dampingRatio = Spring.DampingRatioNoBouncy,
+                           stiffness = Spring.StiffnessMedium
+                       )
+                   )
+           ) {
+               Text(
+                   text = animeName,
+                   style = MaterialTheme.typography.titleLarge,
+                   textAlign = TextAlign.Center,
+                   modifier = Modifier
+                       .fillMaxWidth()
+               )
 //            Image(
 //                painter = painterResource(R.drawable.guren_laggan),
 //                contentDescription = null,
@@ -65,54 +72,63 @@ fun AnimeCard(
 //                    .fillMaxWidth()
 //                    .height(240.dp)
 //            )
-            AsyncImage(
-                model = ImageRequest.Builder(context = LocalContext.current)
-                    .data(animeImage)
-                    .build(),
-                contentDescription = null,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(240.dp)
+               AsyncImage(
+                   model = ImageRequest.Builder(context = LocalContext.current)
+                       .data(animeImage)
+                       .build(),
+                   contentDescription = null,
+                   modifier = Modifier
+                       .fillMaxWidth()
+                       .height(240.dp)
 
 
-            )
-            Spacer(modifier = Modifier.height(4.dp))
-            if (click) {
-                Text(
-                    text = animeDescription,
-                    style = MaterialTheme.typography.bodyLarge,
-                    modifier = Modifier.padding(start = 8.dp, end = 8.dp, top = 16.dp)
-                )
-            }
-            Row(
-                modifier = Modifier
-                    .height(30.dp)
-            ) {
-                TextButton(
-                    onClick = { /*TODO*/ },
-                    modifier = Modifier
-                        .weight(1f)
+               )
+               if (click) {
+                   Text(
+                       text = animeDescription,
+                       style = MaterialTheme.typography.bodyLarge,
+                       modifier = Modifier.padding(start = 8.dp, end = 8.dp, top = 16.dp)
+                   )
+               }
+           }
+           Row(
+               modifier = Modifier
+                   .height(30.dp)
+           ) {
+               Button(
+                   onClick = { /*TODO*/ },
+                   shape = ShapeDefaults.Small.copy(
+                       topEnd = CornerSize(0),
+                       bottomEnd = CornerSize(0),
+                       topStart = CornerSize(0)
 
-                ) {
-                    Text(
-                        text = "More Info",
-                        style = MaterialTheme.typography.labelSmall
-                    )
-                }
-                TextButton(
-                    onClick = { click = !click },
-                    modifier = Modifier
-                        .weight(1f)
+                   ),
+                   modifier = Modifier
+                       .weight(1f)
 
-                ) {
-                    Text(
-                        text = "Description",
-                        style = MaterialTheme.typography.labelSmall
-                    )
-                }
-            }
-
-        }
+               ) {
+                   Text(
+                       text = "More Info",
+                       style = MaterialTheme.typography.labelSmall
+                   )
+               }
+               Button(
+                   onClick = { click = !click },
+                   modifier = Modifier
+                       .weight(1f),
+                   shape = ShapeDefaults.Small.copy(
+                       topStart = CornerSize(0),
+                       bottomStart = CornerSize(0),
+                       topEnd = CornerSize(0)
+                   )
+               ) {
+                   Text(
+                       text = "Description",
+                       style = MaterialTheme.typography.labelSmall
+                   )
+               }
+           }
+       }
     }
 }
 
