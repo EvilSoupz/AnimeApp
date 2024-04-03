@@ -121,7 +121,7 @@ fun AnimeCard(
 fun CardPreview() {
     IsekaiAppTheme(darkTheme = true) {
         AnimeCard(
-            animeName = "TestAnime",
+            animeName = "TestAnime?",
             animeDescription = "TestDescription",
             animeImage = "",
             modifier = Modifier
