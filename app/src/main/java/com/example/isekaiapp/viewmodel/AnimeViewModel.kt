@@ -32,8 +32,9 @@ class AnimeViewModel : ViewModel() {
 
 
     var infoState : InfoState by mutableStateOf(InfoState.Loading)
+        private set
 
-    var animeId: Int? by mutableStateOf(1)
+    private var animeId: Int? by mutableStateOf(1)
 
     init {
         getAnimeList()
@@ -57,11 +58,6 @@ class AnimeViewModel : ViewModel() {
     fun getFullAnimeInfo() {
 //        var animeinfo: FullAnimeInfo? = null
         viewModelScope.launch {
-
-
-
-
-
             if (animeId!=null){
                 infoState = try {
                     val listResult = AnimeApi.retrofitService.getFullAnimeInfo(animeId!!)

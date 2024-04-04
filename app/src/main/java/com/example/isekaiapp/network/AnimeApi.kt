@@ -68,16 +68,17 @@ data class JpgImage(
 @Serializable
 data class FullAnimeInfo(
     @SerialName("mal_id")
-    val malId: Int  = 1,
+    val malId: Int  ,
     val images: AnimeImage,
-    val title: String = "",
-    val type : String?= "",
-    val source : String?="",
-    val episodes : Int?=0,
-    val status : String?="",
-    val rating : String ?="",
-    val score : Float?=0f,
-    val background : String?=""
+    val title: String ,
+    val type : String?,
+    val source : String?,
+    val episodes : Int?,
+    val status : String?,
+    val rating : String ?,
+    val score : Float?,
+    val background : String?,
+    val synopsis: String,
 )
 
 @Serializable
