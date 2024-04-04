@@ -16,55 +16,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
+import androidx.navigation.NavType
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.isekaiapp.R
 import com.example.isekaiapp.viewmodel.AnimeState
 import com.example.isekaiapp.viewmodel.AnimeViewModel
 
 
-@Composable
-fun AnimeList(
-    animeState: AnimeState
-
-) {
-
-    when (animeState) {
-        is AnimeState.Success -> {
-            LazyColumn() {
-                items(animeState.animeList.animes) {
-                    AnimeCard(
-                        animeName = it.title,
-                        animeDescription = it.images.jpg.img,
-                        animeImage = it.images.jpg.img,
-                        modifier = Modifier
-                    )
-                }
-            }
-        }
-        is AnimeState.Loading -> {
-            Image(
-                painter = painterResource(R.drawable.ic_launcher_foreground),
-                contentDescription = null
-            )
-        }
-
-
-        is AnimeState.Error -> {
-            Image(
-                painter = painterResource(R.drawable.ic_launcher_foreground),
-                contentDescription = null
-            )
-
-        }
-    }
-
-
-
-}
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TopAnimeBar() {
-
     CenterAlignedTopAppBar(
         title = {
             Text(
@@ -77,12 +42,35 @@ fun TopAnimeBar() {
 @Composable
 fun AnimeApp() {
     val animeViewModel: AnimeViewModel = viewModel()
-    Scaffold {
+    val navController = rememberNavController()
+    Scaffold { it ->
         Column(
             modifier = Modifier.padding(it)
         ) {
             TopAnimeBar()
-            AnimeList(animeState = animeViewModel.animeState)
+            NavHost(
+                navController = navController,
+                startDestination = "animelist"
+            ) {
+                composable(
+                    "animelist",
+                ) {
+                    AnimeList(animeState = animeViewModel.animeState, onInfoButton = {
+                        animeViewModel.setAnimeId(it)
+                        animeViewModel.getFullAnimeInfo()
+                        navController.navigate("animeinfo")
+                    }
+                    )
+                }
+                composable("animeinfo") {
+                    AnimeInfoScreen(
+                        infoState = animeViewModel.infoState
+
+
+                    )
+                }
+            }
+//            AnimeList(animeState = animeViewModel.animeState)
 
         }
     }

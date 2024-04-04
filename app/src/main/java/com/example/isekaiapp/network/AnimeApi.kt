@@ -7,6 +7,8 @@ import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import retrofit2.Retrofit
 import retrofit2.http.GET
+import retrofit2.http.Path
+import retrofit2.http.Query
 
 
 /// https://docs.api.jikan.moe/#tag/anime/operation/getAnimeSearch
@@ -23,6 +25,12 @@ private val retrofit = Retrofit.Builder()
 interface AnimeApiInterface {
     @GET("v4/anime")
     suspend fun getAnimeList(): AnimeList
+
+
+    @GET("v4/anime/{id}/full")
+    suspend fun getFullAnimeInfo(@Path("id")id : Int): AnimeInfo
+
+
 }
 
 object AnimeApi {
@@ -41,7 +49,7 @@ data class AnimeList(
 data class Anime(
     @SerialName("mal_id")
     val malId: Int,
-    val url: String,
+    val synopsis: String,  // заменить на synopsis
     val images: AnimeImage,
     val title: String,
 
@@ -57,6 +65,31 @@ data class JpgImage(
     @SerialName("image_url")
     val img: String
 )
+@Serializable
+data class FullAnimeInfo(
+    @SerialName("mal_id")
+    val malId: Int  = 1,
+    val images: AnimeImage,
+    val title: String = "",
+    val type : String?= "",
+    val source : String?="",
+    val episodes : Int?=0,
+    val status : String?="",
+    val rating : String ?="",
+    val score : Float?=0f,
+    val background : String?=""
+)
+
+@Serializable
+data class AnimeInfo(
+    @SerialName("data")
+    val anime : FullAnimeInfo
+)
+
+
+
+
+
 
 
 //interface AnimeApiInterface {
