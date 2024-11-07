@@ -1,21 +1,21 @@
 package com.example.isekaiapp.ui.animeui
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.isekaiapp.R
-import com.example.isekaiapp.viewmodel.AnimeState
-import com.example.isekaiapp.viewmodel.AnimeViewModel
+import com.example.isekaiapp.viewmodel.AnimeInfoViewModel
+import com.example.isekaiapp.viewmodel.AnimeInfoViewModelFactory
 import com.example.isekaiapp.viewmodel.InfoState
 
 @Composable
 fun AnimeInfoScreen(
-    infoState: InfoState,
+    animeId : Int
 ) {
-    when (infoState) {
+
+    val animeInfoViewModel : AnimeInfoViewModel = viewModel( factory = AnimeInfoViewModelFactory(animeId))
+    when (val infoState = animeInfoViewModel.infoState) {
         is InfoState.Success -> {
             AnimeInfo(fullAnimeInfo = infoState.animeInfo)
         }

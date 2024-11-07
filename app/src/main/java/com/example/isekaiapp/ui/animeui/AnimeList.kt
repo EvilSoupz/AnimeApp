@@ -6,20 +6,25 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.isekaiapp.R
+import com.example.isekaiapp.viewmodel.AnimeListViewModel
 import com.example.isekaiapp.viewmodel.AnimeState
 
 @Composable
 fun AnimeList(
-    animeState: AnimeState,
     onInfoButton: (Int)-> Unit
 
 ) {
 
-    when (animeState) {
+
+    val animeListViewModel: AnimeListViewModel = viewModel()
+
+    when (val animeState = animeListViewModel.animeState) {
         is AnimeState.Success -> {
             LazyColumn() {
                 items(animeState.animeList.animes) {
+
                     AnimeCard(
                         animeName = it.title,
                         animeDescription = it.synopsis,  //найти описание
@@ -44,12 +49,6 @@ fun AnimeList(
                 contentDescription = null
             )
 
-        }
-        else -> {
-            Image(
-                painter = painterResource(R.drawable.ic_launcher_foreground),
-                contentDescription = null
-            )
         }
     }
 
