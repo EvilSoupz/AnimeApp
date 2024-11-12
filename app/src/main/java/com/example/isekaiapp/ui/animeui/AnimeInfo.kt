@@ -51,14 +51,6 @@ fun AnimeInfo(
             modifier = Modifier
                 .fillMaxWidth()
         )
-        //заменить на AsyncImage
-//        Image(
-//            painter = painterResource(R.drawable.guren_laggan),
-//            contentDescription = null,
-//            modifier = Modifier
-//                .fillMaxWidth()
-//
-//        )
         AsyncImage(
             model = ImageRequest.Builder(context = LocalContext.current)
                 .data(fullAnimeInfo.images.jpg.img)
@@ -67,8 +59,6 @@ fun AnimeInfo(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(240.dp)
-
-
         )
         Text(
             text = " id = ${fullAnimeInfo.malId}\n" +
@@ -86,6 +76,9 @@ fun AnimeInfo(
                 .padding(top = 8.dp, start = 16.dp)
                 .fillMaxWidth()
         )
+
+
+
 
 
     }

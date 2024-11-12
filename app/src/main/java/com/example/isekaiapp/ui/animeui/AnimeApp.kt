@@ -18,7 +18,6 @@ import com.example.isekaiapp.navigation.AnimeAppNavigationGraph
 import com.example.isekaiapp.navigation.Screen
 
 
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TopAnimeBar() {
@@ -46,17 +45,17 @@ fun AnimeApp() {
             AnimeAppNavigationGraph(
                 navHostController = navController,
                 mainScreenContent = {
-                                    AnimeList(
-                                        onInfoButton = {
-                                            navController.navigate(Screen.FullAnimeInfoScreen(it))
-                                        }
-                                    )
+                    AnimeList(
+                        onInfoButton = {
+                            navController.navigate(Screen.FullAnimeInfoScreen(it))
+                        }
+                    )
 
 
                 },
                 fullAnimeInfoScreenContent = {
-                    
-                         AnimeInfoScreen(it)
+
+                    AnimeInfoScreen(it)
 
                 }
             )

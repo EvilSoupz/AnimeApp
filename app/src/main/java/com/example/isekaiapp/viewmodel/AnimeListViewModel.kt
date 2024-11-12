@@ -28,10 +28,11 @@ class AnimeListViewModel : ViewModel() {
     }
 
 
-    private fun getAnimeList() {
+    fun getAnimeList(page: Int = 1) {
+        animeState = AnimeState.Loading
         viewModelScope.launch {
             animeState = try {
-                val listResult = AnimeApi.retrofitService.getAnimeList()
+                val listResult = AnimeApi.retrofitService.getAnimeList(page)
                 AnimeState.Success(listResult)
             } catch (e: IOException) {
                 AnimeState.Error

@@ -1,5 +1,6 @@
 package com.example.isekaiapp.network
 
+import android.text.BoringLayout
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -27,6 +28,10 @@ interface AnimeApiInterface {
     suspend fun getAnimeList(): AnimeList
 
 
+    @GET("v4/anime")
+    suspend fun getAnimeList(@Query("page")page : Int) : AnimeList   //v4/anime?page=xxxx
+
+
     @GET("v4/anime/{id}/full")
     suspend fun getFullAnimeInfo(@Path("id")id : Int): AnimeInfo
 
@@ -42,14 +47,18 @@ object AnimeApi {
 @Serializable
 data class AnimeList(
     @SerialName("data")
-    val animes: List<Anime>
+    val animes: List<Anime>,
+    val pagination: Pagination
+
 )
+
+
 
 @Serializable
 data class Anime(
     @SerialName("mal_id")
     val malId: Int,
-    val synopsis: String,  // заменить на synopsis
+    val synopsis: String,
     val images: AnimeImage,
     val title: String,
 

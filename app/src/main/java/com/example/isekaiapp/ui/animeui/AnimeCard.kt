@@ -65,13 +65,6 @@ fun AnimeCard(
                     modifier = Modifier
                         .fillMaxWidth()
                 )
-//            Image(
-//                painter = painterResource(R.drawable.guren_laggan),
-//                contentDescription = null,
-//                modifier = Modifier
-//                    .fillMaxWidth()
-//                    .height(240.dp)
-//            )
 
 
                 ///лишнее
