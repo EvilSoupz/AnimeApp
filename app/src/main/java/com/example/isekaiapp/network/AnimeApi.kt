@@ -47,8 +47,8 @@ object AnimeApi {
 @Serializable
 data class AnimeList(
     @SerialName("data")
-    val animes: List<Anime>,
-    val pagination: Pagination
+    val animes: MutableList<Anime>,
+    var pagination: Pagination
 
 )
 
@@ -101,36 +101,3 @@ data class AnimeInfo(
 
 
 
-
-//interface AnimeApiInterface {
-//    @GET("manga")
-//    suspend fun getAnimeList(): MangaList
-//}
-//
-//object AnimeApi {
-//    val retrofitService: AnimeApiInterface by lazy {
-//        retrofit.create(AnimeApiInterface::class.java)
-//    }
-//}
-//@Serializable
-//data class MangaList(
-//    val result : String,
-//    val response : String,
-//    val data: List<Manga>,
-//    val limit : Int,
-//    val offset : Int,
-//    val total : Int
-//) {
-//
-//}
-//@Serializable
-//data class Manga(
-//    val id: String,
-//    val type: String,
-//    val attributes : MangaAttributes
-//)
-//@Serializable
-//data class MangaAttributes(
-//    val title: Map<String,String>,
-//    val description : Map<String,String>
-//)

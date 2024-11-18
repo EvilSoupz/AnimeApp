@@ -7,6 +7,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.isekaiapp.network.AnimeApi
 import com.example.isekaiapp.network.AnimeList
+import com.example.isekaiapp.network.PaginatingItems
+import com.example.isekaiapp.network.Pagination
 import kotlinx.coroutines.launch
 import java.io.IOException
 
@@ -22,6 +24,14 @@ class AnimeListViewModel : ViewModel() {
     var animeState: AnimeState by mutableStateOf(AnimeState.Loading)
         private set
 
+    private val animeList :AnimeList = AnimeList(animes = mutableListOf(),pagination = Pagination(lastVisiblePage = 0,
+        currentPage = 0,
+        hasNextPage = false,
+        items = PaginatingItems(count = 0, total = 0, perPage = 0)
+    )
+
+    )
+
 
     init {
         getAnimeList()
@@ -33,7 +43,10 @@ class AnimeListViewModel : ViewModel() {
         viewModelScope.launch {
             animeState = try {
                 val listResult = AnimeApi.retrofitService.getAnimeList(page)
-                AnimeState.Success(listResult)
+                animeList.animes += listResult.animes
+                animeList.pagination = listResult.pagination
+
+                AnimeState.Success(animeList)
             } catch (e: IOException) {
                 AnimeState.Error
             }
