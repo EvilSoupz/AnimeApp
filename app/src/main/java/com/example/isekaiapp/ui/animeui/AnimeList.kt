@@ -5,9 +5,12 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -18,9 +21,11 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.isekaiapp.R
 import com.example.isekaiapp.viewmodel.AnimeListViewModel
@@ -38,16 +43,25 @@ fun AnimeList(
     when (val animeState = animeListViewModel.animeState) {
         is AnimeState.Success -> {
 
-            Box {
+            Box(modifier = Modifier.fillMaxSize()) {
                 LazyColumn(
-                    state = lazyColumState
+                    state = lazyColumState,
+                    contentPadding =  PaddingValues(6.dp),
+                    verticalArrangement = Arrangement.spacedBy(6.dp)
                 ) {
 
-                    items(animeState.animeList.animes, key = { it.malId }) {
+                    item{
+                        SearchRow(
+                            onSearchButton = { animeListViewModel.getAnimeListByq(it)  },
+                            modifier = Modifier.fillMaxWidth()
+                        )
+                    }
+
+                    items(animeState.animeList.animes) {
 
                         AnimeCard(
                             animeName = it.title,
-                            animeDescription = it.synopsis,
+                            animeDescription = it.synopsis ?: "no info",
                             animeImage = it.images.jpg.img,
                             onInfoButton = { onInfoButton(it.malId) },
                             modifier = Modifier
@@ -62,11 +76,24 @@ fun AnimeList(
 
                 }
                 if (lazyColumState.canScrollBackward)
-                    IconButton(
-                        onClick = { lazyColumState.requestScrollToItem(0) }
+
+                    Column(
+                        verticalArrangement = Arrangement.Bottom,
+                        horizontalAlignment = Alignment.End,
+                        modifier = Modifier.fillMaxSize()
                     ) {
-                        Icon(imageVector = Icons.Default.KeyboardArrowUp, contentDescription = null)
+                        IconButton(
+                            onClick = { lazyColumState.requestScrollToItem(0) },
+                            modifier = Modifier
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.KeyboardArrowUp,
+                                contentDescription = null
+                            )
+                        }
+
                     }
+
 
             }
 
@@ -86,9 +113,6 @@ fun AnimeList(
                 painter = painterResource(R.drawable.ic_launcher_foreground),
                 contentDescription = null
             )
-
         }
     }
-
-
 }

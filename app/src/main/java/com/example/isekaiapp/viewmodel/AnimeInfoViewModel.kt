@@ -6,8 +6,9 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.example.isekaiapp.data.FullAnimeInfo
 import com.example.isekaiapp.network.AnimeApi
-import com.example.isekaiapp.network.FullAnimeInfo
+
 import kotlinx.coroutines.launch
 import java.io.IOException
 

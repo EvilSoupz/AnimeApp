@@ -10,8 +10,8 @@ import androidx.navigation.toRoute
 @Composable
 fun AnimeAppNavigationGraph(
     navHostController: NavHostController,
-    mainScreenContent : @Composable ()->Unit,
-    fullAnimeInfoScreenContent : @Composable (id : Int) -> Unit
+    mainScreenContent: @Composable () -> Unit,
+    fullAnimeInfoScreenContent: @Composable (id: Int) -> Unit
 
 
 ) {
@@ -19,13 +19,13 @@ fun AnimeAppNavigationGraph(
 
     NavHost(
         navController = navHostController,
-        startDestination =  Screen.MainScreen
-        ) {
+        startDestination = Screen.MainScreen
+    ) {
 
-            composable<Screen.MainScreen>{
-                mainScreenContent()
-            }
-        composable <Screen.FullAnimeInfoScreen>{
+        composable<Screen.MainScreen> {
+            mainScreenContent()
+        }
+        composable<Screen.FullAnimeInfoScreen> {
             val screen: Screen.FullAnimeInfoScreen = it.toRoute()
             fullAnimeInfoScreenContent(screen.id)
 

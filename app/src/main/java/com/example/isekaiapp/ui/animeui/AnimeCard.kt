@@ -43,8 +43,7 @@ fun AnimeCard(
 ) {
     var click by remember { mutableStateOf(false) }
     Card(
-        modifier = modifier
-            .padding(8.dp)
+
 
     ) {
         Column {

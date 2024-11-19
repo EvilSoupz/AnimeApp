@@ -1,4 +1,4 @@
-package com.example.isekaiapp.network
+package com.example.isekaiapp.data
 
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
