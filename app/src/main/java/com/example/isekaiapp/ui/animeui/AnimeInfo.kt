@@ -72,6 +72,7 @@ fun AnimeInfo(
             modifier = Modifier
                 .padding(top = 8.dp, start = 16.dp)
                 .fillMaxWidth()
+
         )
 
 
