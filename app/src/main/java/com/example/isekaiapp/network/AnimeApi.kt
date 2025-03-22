@@ -19,6 +19,8 @@ import retrofit2.http.Query
 /// https://docs.api.jikan.moe/#tag/anime/operation/getAnimeSearch
 
 
+////  https://api.jikan.moe/v4/anime?genres=62  жанр 62 = isekai
+
 
 
 private val interceptor  = HttpLoggingInterceptor().apply {

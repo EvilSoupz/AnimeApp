@@ -30,8 +30,8 @@ fun SearchRow(
         }
         TextField(
             label = {
-               Text(text = "Search")
-                    },
+                Text(text = "Search")
+            },
             value = textValue,
             onValueChange = { textValue = it },
             modifier = Modifier.weight(1f)

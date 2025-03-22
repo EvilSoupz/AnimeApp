@@ -45,6 +45,9 @@ data class FullAnimeInfo(
     val score: Float?,
     val background: String?,
     val synopsis: String?,
+    val genres : List<AnimeGenre>,
+    val themes : List<AnimeGenre>,
+
 )
 
 @Serializable
@@ -52,5 +55,12 @@ data class AnimeInfo(
     @SerialName("data")
     val anime: FullAnimeInfo
 )
+@Serializable
+data class AnimeGenre(
+    @SerialName("mal_id")
+    val id : Int,
+    val type: String,
+    val name : String,
+    val url : String
 
-
+)

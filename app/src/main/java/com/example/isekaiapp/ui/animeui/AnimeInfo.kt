@@ -5,6 +5,8 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -31,7 +33,10 @@ private val testAnimeInfo = FullAnimeInfo(
     rating = "rating",
     score = 0f,
     background = "background",
-    synopsis = "synopsis"
+    synopsis = "synopsis",
+    genres = listOf(),
+    themes = listOf(),
+
 
 )
 
@@ -40,40 +45,45 @@ fun AnimeInfo(
     fullAnimeInfo: FullAnimeInfo,
     modifier: Modifier = Modifier
 ) {
-    Column {
-        Text(
-            text = fullAnimeInfo.title,
-            style = MaterialTheme.typography.titleLarge,
-            textAlign = TextAlign.Center,
-            modifier = Modifier
-                .fillMaxWidth()
-        )
-        AsyncImage(
-            model = ImageRequest.Builder(context = LocalContext.current)
-                .data(fullAnimeInfo.images.jpg.img)
-                .build(),
-            contentDescription = null,
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(240.dp)
-        )
-        Text(
-            text = " id = ${fullAnimeInfo.malId}\n" +
-                    "title = ${fullAnimeInfo.title}\n" +
-                    "type = ${fullAnimeInfo.type}\n" +
-                    "source = ${fullAnimeInfo.source}\n" +
-                    "episodes = ${fullAnimeInfo.episodes}\n" +
-                    "status = ${fullAnimeInfo.status}\n" +
-                    "rating = ${fullAnimeInfo.rating}\n" +
-                    "score = ${fullAnimeInfo.score}\n" +
-                    "background = ${fullAnimeInfo.background}\n" +
-                    "synopsys = ${fullAnimeInfo.synopsis}",
-            textAlign = TextAlign.Center,
-            modifier = Modifier
-                .padding(top = 8.dp, start = 16.dp)
-                .fillMaxWidth()
+    LazyColumn {
+        item{
+            Text(
+                text = fullAnimeInfo.title,
+                style = MaterialTheme.typography.titleLarge,
+                textAlign = TextAlign.Center,
+                modifier = Modifier
+                    .fillMaxWidth()
+            )
+            AsyncImage(
+                model = ImageRequest.Builder(context = LocalContext.current)
+                    .data(fullAnimeInfo.images.jpg.img)
+                    .build(),
+                contentDescription = null,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(240.dp)
+            )
+            Text(
+                text = " id = ${fullAnimeInfo.malId}\n" +
+                        "title = ${fullAnimeInfo.title}\n" +
+                        "type = ${fullAnimeInfo.type}\n" +
+                        "source = ${fullAnimeInfo.source}\n" +
+                        "episodes = ${fullAnimeInfo.episodes}\n" +
+                        "status = ${fullAnimeInfo.status}\n" +
+                        "rating = ${fullAnimeInfo.rating}\n" +
+                        "score = ${fullAnimeInfo.score}\n" +
+                        "background = ${fullAnimeInfo.background}\n" +
+                        "synopsys = ${fullAnimeInfo.synopsis}\n +" +
+                        "genres :  =${fullAnimeInfo.genres.toString()}\n +" +
+                        "themes :  =${fullAnimeInfo.themes.toString()}\n ",
+                textAlign = TextAlign.Center,
+                modifier = Modifier
+                    .padding(top = 8.dp, start = 16.dp)
+                    .fillMaxWidth()
 
-        )
+            )
+        }
+
 
 
     }
