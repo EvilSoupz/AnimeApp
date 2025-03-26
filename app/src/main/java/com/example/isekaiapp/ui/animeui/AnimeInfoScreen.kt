@@ -6,15 +6,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.isekaiapp.R
 import com.example.isekaiapp.viewmodel.AnimeInfoViewModel
-import com.example.isekaiapp.viewmodel.AnimeInfoViewModelFactory
 import com.example.isekaiapp.viewmodel.InfoState
 
 @Composable
 fun AnimeInfoScreen(
-    animeId : Int
+    animeInfoViewModel: AnimeInfoViewModel
 ) {
-
-    val animeInfoViewModel : AnimeInfoViewModel = viewModel( factory = AnimeInfoViewModelFactory(animeId))
     when (val infoState = animeInfoViewModel.infoState) {
         is InfoState.Success -> {
             AnimeInfo(fullAnimeInfo = infoState.animeInfo)
