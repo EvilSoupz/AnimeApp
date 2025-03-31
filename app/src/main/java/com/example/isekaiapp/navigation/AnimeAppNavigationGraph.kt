@@ -1,38 +1,36 @@
 package com.example.isekaiapp.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
+import androidx.hilt.navigation.compose.hiltViewModel
 
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
+import com.example.isekaiapp.viewmodel.AnimeInfoViewModel
+import dagger.Binds
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.scopes.ViewModelScoped
+import javax.inject.Inject
 
 @Composable
 fun AnimeAppNavigationGraph(
     navHostController: NavHostController,
     mainScreenContent: @Composable () -> Unit,
-    fullAnimeInfoScreenContent: @Composable (id: Int) -> Unit
-
-
+    fullAnimeInfoScreenContent: @Composable (viewModel: AnimeInfoViewModel) -> Unit
 ) {
-
-
     NavHost(
         navController = navHostController,
         startDestination = Screen.MainScreen
     ) {
-
         composable<Screen.MainScreen> {
             mainScreenContent()
         }
         composable<Screen.FullAnimeInfoScreen> {
-            val screen: Screen.FullAnimeInfoScreen = it.toRoute()
-            fullAnimeInfoScreenContent(screen.id)
-
-
+            val viewModel = hiltViewModel<AnimeInfoViewModel>(it)
+            fullAnimeInfoScreenContent(viewModel)
         }
-
-
     }
-
 }
