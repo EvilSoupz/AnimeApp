@@ -9,6 +9,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import com.example.isekaiapp.viewmodel.AnimeInfoViewModel
+import com.example.isekaiapp.viewmodel.AnimeListViewModel
 import dagger.Binds
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,7 +19,7 @@ import javax.inject.Inject
 @Composable
 fun AnimeAppNavigationGraph(
     navHostController: NavHostController,
-    mainScreenContent: @Composable () -> Unit,
+    mainScreenContent: @Composable (viewModel : AnimeListViewModel) -> Unit,
     fullAnimeInfoScreenContent: @Composable (viewModel: AnimeInfoViewModel) -> Unit
 ) {
     NavHost(
@@ -26,7 +27,8 @@ fun AnimeAppNavigationGraph(
         startDestination = Screen.MainScreen
     ) {
         composable<Screen.MainScreen> {
-            mainScreenContent()
+            val viewModel = hiltViewModel<AnimeListViewModel>()
+            mainScreenContent(viewModel)
         }
         composable<Screen.FullAnimeInfoScreen> {
             val viewModel = hiltViewModel<AnimeInfoViewModel>(it)

@@ -8,7 +8,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
 import androidx.lifecycle.viewModelScope
+import androidx.navigation.toRoute
 import com.example.isekaiapp.data.FullAnimeInfo
+import com.example.isekaiapp.navigation.Screen
 import com.example.isekaiapp.network.AnimeApi
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
@@ -28,45 +30,26 @@ sealed interface InfoState {
 
 @HiltViewModel
 class AnimeInfoViewModel @Inject constructor(
+    private val animeApi: AnimeApi,
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     var infoState: InfoState by mutableStateOf(InfoState.Loading)
         private set
 
-//    private val animeId: Int = 1
-
-
     init{
-       val  animeId: Int? = savedStateHandle.get<Int>("animeId")
-        if (animeId!= null){
+       val  animeId = savedStateHandle.toRoute<Screen.FullAnimeInfoScreen>().animeId
             getFullAnimeInfo(animeId)
-        }
-        else{
-            infoState=InfoState.Error
-        }
     }
-
 
     private fun getFullAnimeInfo(id : Int) {
         viewModelScope.launch {
             infoState = try {
-                val listResult = AnimeApi.retrofitService.getFullAnimeInfo(id)
+                val listResult = animeApi.getFullAnimeInfo(id)
                 InfoState.Success(listResult.anime)
             } catch (e: IOException) {
                 InfoState.Error
             }
-
-
         }
-
     }
 }
-
-
-//class AnimeInfoViewModelFactory(private val animeId: Int) : ViewModelProvider.Factory {
-//
-//    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-//        return AnimeInfoViewModel(animeId) as T
-//    }
-//}

@@ -19,18 +19,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.isekaiapp.R
 import com.example.isekaiapp.viewmodel.AnimeListViewModel
 import com.example.isekaiapp.viewmodel.AnimeState
 
 @Composable
 fun AnimeList(
+    animeListViewModel: AnimeListViewModel,
     onInfoButton: (Int) -> Unit
 ) {
 
-
-    val animeListViewModel: AnimeListViewModel = viewModel()
     val lazyColumState = rememberLazyListState()
     when (val animeState = animeListViewModel.animeState) {
         is AnimeState.Success -> {
@@ -38,13 +36,13 @@ fun AnimeList(
             Box(modifier = Modifier.fillMaxSize()) {
                 LazyColumn(
                     state = lazyColumState,
-                    contentPadding =  PaddingValues(6.dp),
+                    contentPadding = PaddingValues(6.dp),
                     verticalArrangement = Arrangement.spacedBy(6.dp)
                 ) {
 
-                    item{
+                    item {
                         SearchRow(
-                            onSearchButton = { animeListViewModel.getAnimeListByq(it)  },
+                            onSearchButton = { animeListViewModel.getAnimeListByq(it) },
                             modifier = Modifier.fillMaxWidth()
                         )
                     }
@@ -83,13 +81,8 @@ fun AnimeList(
                                 contentDescription = null
                             )
                         }
-
                     }
-
-
             }
-
-
         }
 
         is AnimeState.Loading -> {
@@ -99,7 +92,6 @@ fun AnimeList(
             )
         }
 
-
         is AnimeState.Error -> {
             Image(
                 painter = painterResource(R.drawable.ic_launcher_foreground),
@@ -107,7 +99,4 @@ fun AnimeList(
             )
         }
     }
-
-
-
 }

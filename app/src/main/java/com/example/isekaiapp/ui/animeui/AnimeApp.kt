@@ -44,8 +44,10 @@ fun AnimeApp() {
 
             AnimeAppNavigationGraph(
                 navHostController = navController,
-                mainScreenContent = {
+                mainScreenContent = { viewModel ->
+
                     AnimeList(
+                        viewModel,
                         onInfoButton = {
                             navController.navigate(Screen.FullAnimeInfoScreen(it))
                         }
