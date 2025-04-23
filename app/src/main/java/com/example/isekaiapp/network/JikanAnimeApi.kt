@@ -32,7 +32,7 @@ private val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
 private val zxcJson = Json { ignoreUnknownKeys = true }
 
 
-interface AnimeApi {
+interface JikanAnimeApi {
 //    @GET("v4/anime")
 //    suspend fun getAnimeListByq(@Query("q") q: String): AnimeList    //q - поисковый запрос
 
@@ -52,13 +52,13 @@ interface AnimeApi {
 object AnimeApiModule {
     @Provides
     @Singleton
-    fun provideAnimeApi(): AnimeApi{
+    fun provideAnimeApi(): JikanAnimeApi{
         return Retrofit.Builder()
             .addConverterFactory(zxcJson.asConverterFactory("application/json".toMediaType()))
             .baseUrl("https://api.jikan.moe/")
             .client(client)
             .build()
-            .create(AnimeApi::class.java)
+            .create(JikanAnimeApi::class.java)
     }
 }
 

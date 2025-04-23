@@ -1,7 +1,6 @@
 package com.example.isekaiapp.navigation
 
 import kotlinx.serialization.Serializable
-import javax.inject.Inject
 
 @Serializable
 sealed class Screen(

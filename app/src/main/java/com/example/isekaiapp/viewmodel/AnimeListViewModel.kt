@@ -6,9 +6,10 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.isekaiapp.data.AnimeList
+import com.example.isekaiapp.data.AnimeRepository
 import com.example.isekaiapp.data.PaginatingItems
 import com.example.isekaiapp.data.Pagination
-import com.example.isekaiapp.network.AnimeApi
+import com.example.isekaiapp.network.JikanAnimeApi
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.io.IOException
@@ -23,7 +24,7 @@ sealed interface AnimeState {
 
 @HiltViewModel
 class AnimeListViewModel @Inject constructor(
-    private val animeApi : AnimeApi
+    private val repository : AnimeRepository
 ) : ViewModel() {
     var animeState: AnimeState by mutableStateOf(AnimeState.Loading)
         private set
@@ -46,10 +47,6 @@ class AnimeListViewModel @Inject constructor(
         question = quest
     }
 
-    fun resetQuestion() {
-        question = ""
-    }
-
     private fun resetAnimeList() {
         animeList = AnimeList(
             animes = mutableListOf(), pagination = Pagination(
@@ -66,7 +63,7 @@ class AnimeListViewModel @Inject constructor(
         animeState = AnimeState.Loading
         viewModelScope.launch {
             animeState = try {
-                val listResult = animeApi.getAnimeList(page, question)
+                val listResult = repository.getAnimeList(page, question)
                 animeList.animes += listResult.animes
                 animeList.pagination = listResult.pagination
                 AnimeState.Success(animeList)

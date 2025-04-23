@@ -5,17 +5,13 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelStoreOwner
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.toRoute
+import com.example.isekaiapp.data.AnimeRepository
 import com.example.isekaiapp.data.FullAnimeInfo
 import com.example.isekaiapp.navigation.Screen
-import com.example.isekaiapp.network.AnimeApi
-import dagger.assisted.Assisted
-import dagger.assisted.AssistedInject
+import com.example.isekaiapp.network.JikanAnimeApi
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.isActive
 
 import kotlinx.coroutines.launch
 import java.io.IOException
@@ -30,7 +26,7 @@ sealed interface InfoState {
 
 @HiltViewModel
 class AnimeInfoViewModel @Inject constructor(
-    private val animeApi: AnimeApi,
+    private val repository: AnimeRepository,
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
@@ -45,7 +41,7 @@ class AnimeInfoViewModel @Inject constructor(
     private fun getFullAnimeInfo(id : Int) {
         viewModelScope.launch {
             infoState = try {
-                val listResult = animeApi.getFullAnimeInfo(id)
+                val listResult = repository.getFullAnimeInfo(id)
                 InfoState.Success(listResult.anime)
             } catch (e: IOException) {
                 InfoState.Error
